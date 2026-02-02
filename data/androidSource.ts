@@ -130,4 +130,4 @@ class ProductViewModel : ViewModel() {
     }
 }`
   }
-];`
+];
