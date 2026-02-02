@@ -99,31 +99,46 @@ class MainActivity : AppCompatActivity() {
 ];
 
 export const README_CONTENT = `
-# ⚡ CLOUT CLOTHING
+<div align="center">
+  <img width="1200" height="400" alt="CLOUT Header" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" style="border-radius: 20px; object-fit: cover;" />
+</div>
 
-> A high-performance Android catalog for premium streetwear.
+# ⚡ CLOUT CLOTHING 
 
-### 🚀 Overview
-This application implements a modern shopping experience using clean architecture principles. It serves as a visual showcase for the latest Clout drops.
-
-### 🛠 Tech Stack
-- **Architecture**: MVVM (Model-View-ViewModel)
-- **Language**: Kotlin 1.9+
-- **Framework**: Android Jetpack (LiveData, ViewModel, ViewBinding)
-- **UI Design**: Material 3 / Streetwear Aesthetic
-
-### 👕 Product Catalog
-- **Oversized 'Clout' Hoodie** - ₱2,450
-- **Urban Cargo Joggers** - ₱1,890
-- **Essential Graphic Tee** - ₱850
-- **Distressed Denim Jacket** - ₱3,200
-- **Varsity Letterman Jacket** - ₱4,500
-
-### 🔑 Key Features
-- **MVVM Pattern**: Clean separation of concerns for better maintainability.
-- **Dynamic Catalog**: Real-time product listing with high-res previews.
-- **User Flow**: Integrated Sign-in and Profile management modules.
+> **Premium Streetwear Catalog for Android**  
+> A high-performance, aesthetically driven mobile application built for modern fashion retail.
 
 ---
-*Stay Clout.*
+
+### 📱 Project Overview
+**Clout Clothing** is an Android application engineered to deliver a seamless shopping experience for premium streetwear. It focuses on clean typography, high-resolution imagery, and a robust architecture to handle growing product catalogs.
+
+### 🛠 Tech Stack & Core Tools
+*   **Language:** Kotlin (1.9+) - Ensuring concise and safe code.
+*   **Architecture:** MVVM (Model-View-ViewModel) - Promoting a clean separation of concerns.
+*   **UI Framework:** XML with ViewBinding - For efficient and type-safe layout management.
+*   **Jetpack Components:** LiveData, ViewModel, Lifecycle-aware components.
+*   **Design System:** Material 3 implementation with custom streetwear styling.
+
+### ⚙️ How It Works
+1.  **Model**: Defines the core data structure for apparel items (ID, Name, Price, Category).
+2.  **ViewModel**: Manages UI state and business logic, exposing lifecycle-aware observables.
+3.  **View**: Listens for data updates and renders the product catalog via a highly optimized RecyclerView.
+
+### 👕 Featured Collection
+| Item | Price | Category |
+| :--- | :--- | :--- |
+| **Oversized 'Clout' Hoodie** | ₱2,450 | Streetwear |
+| **Urban Cargo Joggers** | ₱1,890 | Bottoms |
+| **Essential Graphic Tee** | ₱850 | Streetwear |
+| **Distressed Denim Jacket** | ₱3,200 | Outerwear |
+| **Varsity Letterman Jacket** | ₱4,500 | Outerwear |
+
+### 🔑 Key Features
+*   🚀 **Reactive UI**: Data changes automatically reflect in the view via LiveData.
+*   📦 **Modular Code**: Decoupled components for easier scalability and testing.
+*   🎨 **Custom Theming**: Deep black and minimalist white accents for a premium look.
+
+---
+*Stay Fresh. Stay Clout.*
 `;
