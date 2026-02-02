@@ -237,25 +237,42 @@ class MainActivity : AppCompatActivity() {
 ];
 
 export const README_CONTENT = `
-# ⚡ CLOUT CLOTHING
+# ⚡ CLOUT CLOTHING (Android Native)
 
-**Native Android MVVM Architecture - Ready to Run**
+**THIS CODE IS FOR ANDROID STUDIO ON WINDOWS/MACOS.**
+
+### ⚠️ IMPORTANT:
+The web page you are looking at is just a **Showcase/Repository Viewer**. 
+To run the actual app, you must copy the files from the **"Code"** tab into a new Android Studio project.
+
+---
+
+### 🚀 STEPS TO RUN IN ANDROID STUDIO (WINDOWS):
+
+1.  **Open Android Studio**: Start a new "Empty Views Activity" project.
+2.  **Project Config**:
+    - Project Name: \`Clout Clothing\`
+    - Package Name: \`com.clout.clothing\` (Critical!)
+    - Language: \`Kotlin\`
+3.  **Setup build.gradle (Module: app)**:
+    - Add \`viewBinding true\` inside the \`android { ... }\` block.
+    - Copy the dependencies from the \`app/build.gradle\` file in the "Code" tab.
+4.  **Create Package Folders**:
+    - Right-click \`java/com.clout.clothing\` -> New -> Package.
+    - Create \`model\`, \`view\`, and \`viewmodel\`.
+5.  **Copy-Paste Source**:
+    - Open the **"Code"** tab here.
+    - Click **"Copy raw content"** for each file.
+    - Paste it into the matching file in your Android Studio project.
+6.  **Run**: Press Shift+F10 (or the Green Play button) to run on your Emulator or Windows Android Subsystem.
 
 ---
 
-### 🚀 Implementation Guide:
-1.  **Project Creation**: Create a new "Empty Views Activity" in Android Studio.
-2.  **Namespace**: Ensure your package is \`com.clout.clothing\`.
-3.  **Gradle**: Copy the \`build.gradle\` dependencies. Don't forget \`viewBinding true\`.
-4.  **Source Code**: Copy the Kotlin files into \`java/com/clout/clothing/...\` and XML into \`res/layout/\`.
-5.  **Build**: Sync Gradle and click the "Run" button.
+### 🏛 ARCHITECTURE: MVVM
+- **Model**: Data structures for clothing products.
+- **ViewModel**: ProductViewModel manages the list and logic.
+- **View**: MainActivity & Adapter render the list using RecyclerView.
+- **ViewBinding**: Clean UI interaction without findViewById.
 
-### 🏛 Technical Specs
-- **Architecture**: MVVM using Jetpack ViewModel & LiveData.
-- **Data Binding**: ViewBinding for safe UI references.
-- **Images**: Remote image rendering via Glide.
-- **UI**: Material Design 3.
-
----
-*Stay Fresh. Stay Clout.*
+*Created for technical submission.*
 `;
