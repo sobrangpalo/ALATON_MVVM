@@ -4,28 +4,31 @@ export const ANDROID_SOURCE_FILES: FileContent[] = [
   {
     path: "README.md",
     language: "markdown",
-    // Escaping the backticks around the package name to prevent them from closing the template literal.
-    content: `# ALATON MVVM Streetwear App 🚀
+    content: `# ALATON Streetwear App (MVVM) 🚀
+Hello! Since you are a student using an iPad, here is a quick guide on how this professional Android project works.
 
-## 🛒 Product Flow
-1. **Browse**: Look through the streetwear collection.
-2. **Cart**: Add items you like to your shopping bag.
-3. **Checkout**: Finalize your purchase to create an order.
-4. **Manage**: Track your order from 'Pending' to 'Received' to 'Shipped'.
+### 🛍️ Product Flow
+This app follows a standard e-commerce flow:
+1. **Authentication**: Users sign in or create a new account.
+2. **Product Discovery**: View a curated list of streetwear from the ViewModel.
+3. **Cart Management**: Add items to a reactive cart.
+4. **Order Lifecycle**: Checkout to create an order, then manage its state (Pending → Received → Shipped).
 
-## 🛠 Tech Stack
-- **Language**: Kotlin (Modern Android standard).
-- **UI**: XML with ViewBinding.
-- **Architecture**: MVVM (Model-View-ViewModel) for clean, professional code.
-- **Libraries**: Glide (Image Loading), Lifecycle KTX (Data handling).
+### 🛠️ Language & Tech
+- **Language**: **Kotlin** (The modern, safe, and preferred language for Android development).
+- **Architecture**: **MVVM** (Model-View-ViewModel). This ensures the app is easy to test and maintain.
+- **UI**: **XML** with ViewBinding for high-performance layouts.
 
-## 💻 How to open in Android Studio (PC/Mac)
-Since you are on an iPad, you can't run Android Studio here, but if you get to a computer:
-1. Open Android Studio and select **"New Project"**.
-2. Choose **"Empty Views Activity"**.
-3. **CRITICAL**: Use package name \`com.alaton.mvvm\`.
-4. Create the files exactly as named in the "Source Code" tab and paste the code.
-5. Click the green **Run** button!`
+### 💻 How to open in Android Studio
+*Note: Android Studio requires a PC or Mac. Since you are on an iPad, you can use this web app to study the code, but to run it:*
+
+1. Get to a computer with **Android Studio** installed.
+2. Select **"New Project"** -> **"Empty Views Activity"**.
+3. **Important**: Set the Package Name to \`com.alaton.mvvm\`.
+4. Copy the files from the **"Android Source"** tab in this preview and paste them into your project folders:
+   - Kotlin files go into \`app/src/main/java/com/alaton/mvvm/\`
+   - XML files go into \`app/src/main/res/layout/\`
+5. Click the green **Play (Run)** button to see it on a real phone or emulator!`
   },
   {
     path: "settings.gradle",
@@ -127,4 +130,4 @@ class ProductViewModel : ViewModel() {
     }
 }`
   }
-];
+];`
