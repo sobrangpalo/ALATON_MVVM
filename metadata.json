@@ -1,5 +1,5 @@
 {
-  "name": "“ALATON_MVVM”",
-  "description": "A high-fidelity simulation of an Android Product List application using MVVM architecture, including the Kotlin source code and a clean README.",
+  "name": "Clout Clothing MVVM Showcase",
+  "description": "A professional Android MVVM implementation showcase featuring a streetwear product catalog with clean architecture and Kotlin source code.",
   "requestFramePermissions": []
 }

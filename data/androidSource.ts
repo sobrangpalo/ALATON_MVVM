@@ -3,6 +3,67 @@ import { FileContent } from '../types';
 
 export const ANDROID_SOURCE_FILES: FileContent[] = [
   {
+    path: "app/build.gradle",
+    language: "gradle",
+    content: `plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.clout.clothing'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.clout.clothing"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Core MVVM & KTX
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    
+    // Image Loading
+    implementation 'github.com/bumptech/glide:glide:4.16.0'
+}`
+  },
+  {
+    path: "app/src/main/AndroidManifest.xml",
+    language: "xml",
+    content: `<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:allowBackup="true"
+        android:label="Clout Clothing"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>`
+  },
+  {
     path: "app/src/main/java/com/clout/clothing/model/Product.kt",
     language: "kotlin",
     content: `package com.clout.clothing.model
@@ -10,7 +71,6 @@ export const ANDROID_SOURCE_FILES: FileContent[] = [
 data class Product(
     val id: Int,
     val name: String,
-    val description: String,
     val price: Double,
     val category: String,
     val imageUrl: String
@@ -31,18 +91,48 @@ class ProductViewModel : ViewModel() {
     val products: LiveData<List<Product>> get() = _products
 
     init {
-        loadCloutProducts()
+        _products.value = listOf(
+            Product(1, "Oversized Hoodie", 2450.0, "Streetwear", "https://images.unsplash.com/photo-1556821840-3a63f95609a7"),
+            Product(2, "Cargo Joggers", 1890.0, "Bottoms", "https://images.unsplash.com/photo-1552902865-b72c031ac5ea"),
+            Product(3, "Graphic Tee", 850.0, "Streetwear", "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab")
+        )
+    }
+}`
+  },
+  {
+    path: "app/src/main/java/com/clout/clothing/view/ClothingAdapter.kt",
+    language: "kotlin",
+    content: `package com.clout.clothing.view
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.clout.clothing.databinding.ItemProductBinding
+import com.clout.clothing.model.Product
+
+class ClothingAdapter : RecyclerView.Adapter<ClothingAdapter.ViewHolder>() {
+    private var items = listOf<Product>()
+
+    fun submitList(newItems: List<Product>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 
-    private fun loadCloutProducts() {
-        val clothes = listOf(
-            Product(1, "Oversized 'Clout' Hoodie", "Heavyweight cotton...", 2450.0, "Streetwear", "https://images.unsplash.com/photo-1556821840-3a63f95609a7"),
-            Product(2, "Urban Cargo Joggers", "Tactical design...", 1890.0, "Bottoms", "https://images.unsplash.com/photo-1552902865-b72c031ac5ea"),
-            Product(3, "Essential Graphic Tee", "Boxy fit...", 850.0, "Streetwear", "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"),
-            Product(4, "Distressed Denim Jacket", "Vintage wash...", 3200.0, "Outerwear", "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5"),
-            Product(7, "Varsity Letterman Jacket", "Wool body...", 4500.0, "Outerwear", "https://images.unsplash.com/photo-1551028719-00167b16eac5")
-        )
-        _products.value = clothes
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
+    override fun getItemCount() = items.size
+
+    class ViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: Product) {
+            binding.textName.text = product.name
+            binding.textPrice.text = "₱\${product.price.toInt()}"
+            Glide.with(binding.root).load(product.imageUrl).centerCrop().into(binding.imageProduct)
+        }
     }
 }`
   },
@@ -54,6 +144,7 @@ class ProductViewModel : ViewModel() {
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.clout.clothing.databinding.ActivityMainBinding
 import com.clout.clothing.viewmodel.ProductViewModel
 
@@ -67,10 +158,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = ClothingAdapter()
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-        viewModel.products.observe(this) { productList ->
-            adapter.submitList(productList)
+        viewModel.products.observe(this) { 
+            adapter.submitList(it) 
         }
     }
 }`
@@ -83,61 +175,86 @@ class MainActivity : AppCompatActivity() {
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>`
+  },
+  {
+    path: "app/src/main/res/layout/item_product.xml",
+    language: "xml",
+    content: `<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+        <ImageView
+            android:id="@+id/imageProduct"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical">
+            <TextView 
+                android:id="@+id/textName" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:textSize="16sp"
+                android:textStyle="bold" 
+                android:textColor="#000000" />
+            <TextView 
+                android:id="@+id/textPrice" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#4CAF50"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>`
   }
 ];
 
 export const README_CONTENT = `
-<div align="center">
-  <img width="1200" height="400" alt="CLOUT Header" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" style="border-radius: 20px; object-fit: cover;" />
-</div>
+# ⚡ CLOUT CLOTHING
 
-# ⚡ CLOUT CLOTHING 
-
-> **Premium Streetwear Catalog for Android**  
-> A high-performance, aesthetically driven mobile application built for modern fashion retail.
+**Native Android MVVM Architecture - Ready to Run**
 
 ---
 
-### 📱 Project Overview
-**Clout Clothing** is an Android application engineered to deliver a seamless shopping experience for premium streetwear. It focuses on clean typography, high-resolution imagery, and a robust architecture to handle growing product catalogs.
+### 🚀 Implementation Guide:
+1.  **Project Creation**: Create a new "Empty Views Activity" in Android Studio.
+2.  **Namespace**: Ensure your package is \`com.clout.clothing\`.
+3.  **Gradle**: Copy the \`build.gradle\` dependencies. Don't forget \`viewBinding true\`.
+4.  **Source Code**: Copy the Kotlin files into \`java/com/clout/clothing/...\` and XML into \`res/layout/\`.
+5.  **Build**: Sync Gradle and click the "Run" button.
 
-### 🛠 Tech Stack & Core Tools
-*   **Language:** Kotlin (1.9+) - Ensuring concise and safe code.
-*   **Architecture:** MVVM (Model-View-ViewModel) - Promoting a clean separation of concerns.
-*   **UI Framework:** XML with ViewBinding - For efficient and type-safe layout management.
-*   **Jetpack Components:** LiveData, ViewModel, Lifecycle-aware components.
-*   **Design System:** Material 3 implementation with custom streetwear styling.
-
-### ⚙️ How It Works
-1.  **Model**: Defines the core data structure for apparel items (ID, Name, Price, Category).
-2.  **ViewModel**: Manages UI state and business logic, exposing lifecycle-aware observables.
-3.  **View**: Listens for data updates and renders the product catalog via a highly optimized RecyclerView.
-
-### 👕 Featured Collection
-| Item | Price | Category |
-| :--- | :--- | :--- |
-| **Oversized 'Clout' Hoodie** | ₱2,450 | Streetwear |
-| **Urban Cargo Joggers** | ₱1,890 | Bottoms |
-| **Essential Graphic Tee** | ₱850 | Streetwear |
-| **Distressed Denim Jacket** | ₱3,200 | Outerwear |
-| **Varsity Letterman Jacket** | ₱4,500 | Outerwear |
-
-### 🔑 Key Features
-*   🚀 **Reactive UI**: Data changes automatically reflect in the view via LiveData.
-*   📦 **Modular Code**: Decoupled components for easier scalability and testing.
-*   🎨 **Custom Theming**: Deep black and minimalist white accents for a premium look.
+### 🏛 Technical Specs
+- **Architecture**: MVVM using Jetpack ViewModel & LiveData.
+- **Data Binding**: ViewBinding for safe UI references.
+- **Images**: Remote image rendering via Glide.
+- **UI**: Material Design 3.
 
 ---
 *Stay Fresh. Stay Clout.*
