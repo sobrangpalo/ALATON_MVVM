@@ -1,28 +1,9 @@
-# ALATON Streetwear App (MVVM) 🚀
+# ALATON MVVM
 
-Hello! As a student exploring a professional Android project, here's a clear guide to help you.
+Welcome to the ALATON MVVM project! This repository contains the source code for the ALATON MVVM application.
 
----
+## WebApp Preview
 
-## 🛍️ Product Flow
-This app follows a typical e-commerce workflow:
+You can run the app on a webapp preview: Visit this [WebApp Preview](URL) to see it in action!
 
-1. **Authentication**: Users sign in or create an account.
-2. **Product Discovery**: Browse a curated list of streetwear using the ViewModel.
-3. **Cart Management**: Add items to a dynamic cart.
-4. **Order Lifecycle**: Checkout to place an order and track its status (Pending → Received → Shipped).
-
----
-
-## 🛠️ Technology & Architecture
-- **Programming Language**: **Kotlin** – Safe and modern for Android development.
-- **Architecture**: **MVVM** – Ensures superb app testing and maintainability.
-- **UI**: XML with ViewBinding for lightweight, high-performance interfaces.
-
----
-
-## 💻 How to Open This App
-This is critical:
-1. Install **Android Studio** (requires a Mac/PC). 
-   - On your iPad, you’re free to explore **WebApp previews,** *(For BuildTools)* compiled alternates; Visit `URL` ATTACH NODE TO run-next first scenes selector grid showcase actively tool development visual-fidelity.git
-json merne content_management parison PROXID_PLUGIN2026SOURCE
+Feel free to explore the repository and contribute where you can!
