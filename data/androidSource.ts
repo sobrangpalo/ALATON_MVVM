@@ -99,19 +99,31 @@ class MainActivity : AppCompatActivity() {
 ];
 
 export const README_CONTENT = `
-# CLOUT CLOTHING
+# ⚡ CLOUT CLOTHING
 
-## My Products
-- Oversized 'Clout' Hoodie - ₱2,450
-- Urban Cargo Joggers - ₱1,890
-- Essential Graphic Tee - ₱850
-- Distressed Denim Jacket - ₱3,200
-- Varsity Letterman Jacket - ₱4,500
+> A high-performance Android catalog for premium streetwear.
 
-## Quick Info
-- MVVM Architecture implementation.
-- Material 3 Design for streetwear aesthetic.
-- Features: Login, Registration, Category Browsing, Profile Management.
-- All products include high-resolution preview images.
-- Built for Android Studio compatibility.
+### 🚀 Overview
+This application implements a modern shopping experience using clean architecture principles. It serves as a visual showcase for the latest Clout drops.
+
+### 🛠 Tech Stack
+- **Architecture**: MVVM (Model-View-ViewModel)
+- **Language**: Kotlin 1.9+
+- **Framework**: Android Jetpack (LiveData, ViewModel, ViewBinding)
+- **UI Design**: Material 3 / Streetwear Aesthetic
+
+### 👕 Product Catalog
+- **Oversized 'Clout' Hoodie** - ₱2,450
+- **Urban Cargo Joggers** - ₱1,890
+- **Essential Graphic Tee** - ₱850
+- **Distressed Denim Jacket** - ₱3,200
+- **Varsity Letterman Jacket** - ₱4,500
+
+### 🔑 Key Features
+- **MVVM Pattern**: Clean separation of concerns for better maintainability.
+- **Dynamic Catalog**: Real-time product listing with high-res previews.
+- **User Flow**: Integrated Sign-in and Profile management modules.
+
+---
+*Stay Clout.*
 `;
