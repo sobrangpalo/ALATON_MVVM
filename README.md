@@ -1,20 +1,42 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+Got you 👍 here’s a short and clean README version:
 
-# Run and deploy your AI Studio app
+⸻
 
-This contains everything you need to run your app locally.
+CLOUT CLOTHING
 
-View your app in AI Studio: https://ai.studio/apps/drive/10s44ctcSJznzVJo1NbnLc6fEV7TUfhXo
+CLOUT CLOTHING is a simple product-based application built using the MVVM (Model–View–ViewModel) architecture. The app displays sample clothing products and follows clean code and proper separation of concerns.
 
-## Run Locally
+⸻
 
-**Prerequisites:**  Node.js
+Features
+	•	Login and Registration
+	•	Clothing product listing
+	•	MVVM architecture
+	•	Simple and user-friendly UI
+
+⸻
+
+Technologies Used
+	•	TypeScript
+	•	React / React Native
+	•	Vite
+	•	Material UI
+	•	MVVM Pattern
+
+⸻
+
+How to Run
+
+npm install
+npm run dev
 
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+⸻
+
+Author
+
+Agie Cervantes Alaton
+
+⸻
+
+If you want it even shorter (1-paragraph only) or more formal for submission, just tell me 👍
