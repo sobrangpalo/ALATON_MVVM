@@ -4,7 +4,7 @@ import { Product } from '../types';
 export const MOCK_PRODUCTS: Product[] = [
   {
     id: 1,
-    name: "Oversized 'Clout' Hoodie",
+    name: "Oversized 'ALATON' Hoodie",
     description: "Premium heavyweight cotton with signature embroidery.",
     price: 2450,
     category: "Streetwear",
@@ -21,7 +21,7 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 3,
     name: "Essential Graphic Tee",
-    description: "Boxy fit 240GSM cotton with minimalist logo.",
+    description: "Boxy fit 240GSM cotton with minimalist ALATON logo.",
     price: 850,
     category: "Streetwear",
     imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400&h=400&auto=format&fit=crop"
@@ -29,7 +29,7 @@ export const MOCK_PRODUCTS: Product[] = [
   {
     id: 4,
     name: "Distressed Denim Jacket",
-    description: "Vintage wash with custom 'CLOUT' back patch.",
+    description: "Vintage wash with custom 'ALATON' back patch.",
     price: 3200,
     category: "Outerwear",
     imageUrl: "https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&h=400&auto=format&fit=crop"

@@ -19,3 +19,12 @@ export interface FileContent {
   content: string;
   language: string;
 }
+
+export type OrderStatus = 'PENDING' | 'RECEIVED' | 'SHIPPED';
+
+export interface Order {
+  id: string;
+  items: Product[];
+  status: OrderStatus;
+  timestamp: number;
+}

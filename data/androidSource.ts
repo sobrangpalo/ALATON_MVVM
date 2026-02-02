@@ -1,7 +1,53 @@
-
 import { FileContent } from '../types';
 
 export const ANDROID_SOURCE_FILES: FileContent[] = [
+  {
+    path: "README.md",
+    language: "markdown",
+    // Escaping the backticks around the package name to prevent them from closing the template literal.
+    content: `# ALATON MVVM Streetwear App 🚀
+
+## 🛒 Product Flow
+1. **Browse**: Look through the streetwear collection.
+2. **Cart**: Add items you like to your shopping bag.
+3. **Checkout**: Finalize your purchase to create an order.
+4. **Manage**: Track your order from 'Pending' to 'Received' to 'Shipped'.
+
+## 🛠 Tech Stack
+- **Language**: Kotlin (Modern Android standard).
+- **UI**: XML with ViewBinding.
+- **Architecture**: MVVM (Model-View-ViewModel) for clean, professional code.
+- **Libraries**: Glide (Image Loading), Lifecycle KTX (Data handling).
+
+## 💻 How to open in Android Studio (PC/Mac)
+Since you are on an iPad, you can't run Android Studio here, but if you get to a computer:
+1. Open Android Studio and select **"New Project"**.
+2. Choose **"Empty Views Activity"**.
+3. **CRITICAL**: Use package name \`com.alaton.mvvm\`.
+4. Create the files exactly as named in the "Source Code" tab and paste the code.
+5. Click the green **Run** button!`
+  },
+  {
+    path: "settings.gradle",
+    language: "gradle",
+    content: `pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "ALATON_MVVM"
+include ':app'`
+  },
   {
     path: "app/build.gradle",
     language: "gradle",
@@ -11,11 +57,11 @@ export const ANDROID_SOURCE_FILES: FileContent[] = [
 }
 
 android {
-    namespace 'com.clout.clothing'
+    namespace 'com.alaton.mvvm'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.clout.clothing"
+        applicationId "com.alaton.mvvm"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -39,240 +85,46 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
     
     // Image Loading
-    implementation 'github.com/bumptech/glide:glide:4.16.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
 }`
   },
   {
-    path: "app/src/main/AndroidManifest.xml",
+    path: "app/src/main/res/values/themes.xml",
     language: "xml",
-    content: `<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <application
-        android:allowBackup="true"
-        android:label="Clout Clothing"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-</manifest>`
+    content: `<resources>
+    <style name="Theme.AlatonMVVM" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#2196F3</item>
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>`
   },
   {
-    path: "app/src/main/java/com/clout/clothing/model/Product.kt",
+    path: "app/src/main/java/com/alaton/mvvm/viewmodel/ProductViewModel.kt",
     language: "kotlin",
-    content: `package com.clout.clothing.model
-
-data class Product(
-    val id: Int,
-    val name: String,
-    val price: Double,
-    val category: String,
-    val imageUrl: String
-)`
-  },
-  {
-    path: "app/src/main/java/com/clout/clothing/viewmodel/ProductViewModel.kt",
-    language: "kotlin",
-    content: `package com.clout.clothing.viewmodel
+    content: `package com.alaton.mvvm.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.clout.clothing.model.Product
+import com.alaton.mvvm.model.Product
 
 class ProductViewModel : ViewModel() {
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> get() = _products
 
     init {
+        loadProducts()
+    }
+
+    private fun loadProducts() {
         _products.value = listOf(
-            Product(1, "Oversized Hoodie", 2450.0, "Streetwear", "https://images.unsplash.com/photo-1556821840-3a63f95609a7"),
-            Product(2, "Cargo Joggers", 1890.0, "Bottoms", "https://images.unsplash.com/photo-1552902865-b72c031ac5ea"),
-            Product(3, "Graphic Tee", 850.0, "Streetwear", "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab")
+            Product(1, "Oversized Hoodie", 2450.0, "Streetwear", "https://images.unsplash.com/photo-1556821840-3a63f95609a7", "Premium cotton."),
+            Product(2, "Cargo Joggers", 1890.0, "Bottoms", "https://images.unsplash.com/photo-1552902865-b72c031ac5ea", "Tactical fit."),
+            Product(3, "Graphic Tee", 850.0, "Streetwear", "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab", "Boxy fit.")
         )
     }
 }`
-  },
-  {
-    path: "app/src/main/java/com/clout/clothing/view/ClothingAdapter.kt",
-    language: "kotlin",
-    content: `package com.clout.clothing.view
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.clout.clothing.databinding.ItemProductBinding
-import com.clout.clothing.model.Product
-
-class ClothingAdapter : RecyclerView.Adapter<ClothingAdapter.ViewHolder>() {
-    private var items = listOf<Product>()
-
-    fun submitList(newItems: List<Product>) {
-        items = newItems
-        notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
-    override fun getItemCount() = items.size
-
-    class ViewHolder(private val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
-            binding.textName.text = product.name
-            binding.textPrice.text = "₱\${product.price.toInt()}"
-            Glide.with(binding.root).load(product.imageUrl).centerCrop().into(binding.imageProduct)
-        }
-    }
-}`
-  },
-  {
-    path: "app/src/main/java/com/clout/clothing/view/MainActivity.kt",
-    language: "kotlin",
-    content: `package com.clout.clothing.view
-
-import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.clout.clothing.databinding.ActivityMainBinding
-import com.clout.clothing.viewmodel.ProductViewModel
-
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val viewModel: ProductViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val adapter = ClothingAdapter()
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-
-        viewModel.products.observe(this) { 
-            adapter.submitList(it) 
-        }
-    }
-}`
-  },
-  {
-    path: "app/src/main/res/layout/activity_main.xml",
-    language: "xml",
-    content: `<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>`
-  },
-  {
-    path: "app/src/main/res/layout/item_product.xml",
-    language: "xml",
-    content: `<?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
-        <ImageView
-            android:id="@+id/imageProduct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical">
-            <TextView 
-                android:id="@+id/textName" 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content" 
-                android:textSize="16sp"
-                android:textStyle="bold" 
-                android:textColor="#000000" />
-            <TextView 
-                android:id="@+id/textPrice" 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="#4CAF50"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>`
   }
 ];
-
-export const README_CONTENT = `
-# ⚡ CLOUT CLOTHING (Android Native)
-
-**THIS CODE IS FOR ANDROID STUDIO ON WINDOWS/MACOS.**
-
-### ⚠️ IMPORTANT:
-The web page you are looking at is just a **Showcase/Repository Viewer**. 
-To run the actual app, you must copy the files from the **"Code"** tab into a new Android Studio project.
-
----
-
-### 🚀 STEPS TO RUN IN ANDROID STUDIO (WINDOWS):
-
-1.  **Open Android Studio**: Start a new "Empty Views Activity" project.
-2.  **Project Config**:
-    - Project Name: \`Clout Clothing\`
-    - Package Name: \`com.clout.clothing\` (Critical!)
-    - Language: \`Kotlin\`
-3.  **Setup build.gradle (Module: app)**:
-    - Add \`viewBinding true\` inside the \`android { ... }\` block.
-    - Copy the dependencies from the \`app/build.gradle\` file in the "Code" tab.
-4.  **Create Package Folders**:
-    - Right-click \`java/com.clout.clothing\` -> New -> Package.
-    - Create \`model\`, \`view\`, and \`viewmodel\`.
-5.  **Copy-Paste Source**:
-    - Open the **"Code"** tab here.
-    - Click **"Copy raw content"** for each file.
-    - Paste it into the matching file in your Android Studio project.
-6.  **Run**: Press Shift+F10 (or the Green Play button) to run on your Emulator or Windows Android Subsystem.
-
----
-
-### 🏛 ARCHITECTURE: MVVM
-- **Model**: Data structures for clothing products.
-- **ViewModel**: ProductViewModel manages the list and logic.
-- **View**: MainActivity & Adapter render the list using RecyclerView.
-- **ViewBinding**: Clean UI interaction without findViewById.
-
-*Created for technical submission.*
-`;

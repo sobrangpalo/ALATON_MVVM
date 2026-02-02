@@ -4,9 +4,10 @@ import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart?: (product: Product) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   return (
     <div className="bg-white p-5 mb-4 mx-4 rounded-3xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition-shadow animate-fadeIn">
       <div className="flex-1 pr-4">
@@ -29,11 +30,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           alt={product.name} 
           className="w-24 h-24 rounded-2xl object-cover bg-gray-50 shadow-inner group-hover:scale-105 transition-transform"
         />
-        <div className="absolute -bottom-2 -right-2 bg-black text-white p-2 rounded-xl shadow-lg">
+        <button 
+          onClick={() => onAddToCart?.(product)}
+          className="absolute -bottom-2 -right-2 bg-black text-white p-2 rounded-xl shadow-lg hover:bg-blue-600 active:scale-90 transition-all cursor-pointer"
+        >
            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
           </svg>
-        </div>
+        </button>
       </div>
     </div>
   );
